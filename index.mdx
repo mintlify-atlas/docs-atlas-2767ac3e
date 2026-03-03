@@ -18,8 +18,8 @@ OpenPlans provides a comprehensive suite of tools for:
 - **2D Primitives**: Lines, arcs, rectangles, and polylines for basic drawing operations
 - **3D Shapes**: Cuboids, cylinders, and custom geometries for dimensional modeling
 - **Architectural Elements**: Doors, windows, slabs, and stairs with configurable parameters
-- **Headless Generation**: Generate floor plans programmatically from JSON data
-- **Export Capabilities**: Export to various formats including DXF and IFC
+- **Headless Generation**: Generate floor plans programmatically from configuration data
+- **Text Annotations**: Dimension tools and glyph system for labeling and measurements
 
 ## Core Features
 
@@ -76,16 +76,34 @@ const door = openPlans.baseDoor({
 
 ### 2. Headless Floor Plan Generation
 
-Generate complete floor plans from JSON specifications:
+Generate floor plans programmatically by creating elements from data:
 
 ```javascript
+// Create elements from configuration data
 const floorPlanData = {
-  rooms: [...],
-  walls: [...],
-  openings: [...]
+  rooms: [
+    { position: [0, 0, 0], width: 5, length: 4 }
+  ],
+  doors: [
+    { position: [2.5, 0, 0], length: 1, height: 2.1 }
+  ]
 };
 
-openPlans.generateFromJSON(floorPlanData);
+// Generate elements from data
+floorPlanData.rooms.forEach(room => {
+  openPlans.baseSlab({
+    slabPosition: room.position,
+    coordinates: [[0, 0, 0], [room.width, 0, 0], [room.width, 0, room.length], [0, 0, room.length]]
+  });
+});
+
+floorPlanData.doors.forEach(door => {
+  openPlans.baseDoor({
+    doorPosition: door.position,
+    doorLength: door.length,
+    doorHeight: door.height
+  });
+});
 ```
 
 ## Ready to Get Started?

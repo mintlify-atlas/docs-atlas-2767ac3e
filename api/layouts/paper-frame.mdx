@@ -227,14 +227,18 @@ The `paperSize` setter will throw an error if the format is not set to `'Custom'
 
 ### setOPConfig
 
-Update the paper frame's configuration. Currently a placeholder.
+Update the paper frame's configuration.
 
-<ParamField path="config" type="Record<string, any>" required>
-  Configuration object
+<ParamField path="config" type="PaperFrameOptions" required>
+  Configuration object with paper frame settings
 </ParamField>
 
 ```typescript
-frame.setOPConfig(config);
+frame.setOPConfig({
+  paperName: 'Updated Frame',
+  format: 'A3',
+  orientation: 'landscape'
+});
 ```
 
 ### getOPConfig
